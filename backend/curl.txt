@@ -1,0 +1,32 @@
+for adding employee 
+curl -X POST http://localhost:5000/api/employees/add ^
+-H "Content-Type: application/json" ^
+-d "{\"full_name\":\"Monali Kale\",\"email\":\"admin@gmail.com\",\"password\":\"Admin@123\",\"designation\":\"Software Engineer\",\"salary\":75000,\"role_id\":1,\"department_id\":2,\"manager_id\":1}"
+
+
+
+for login in portal cmd:
+curl -X POST http://localhost:5000/api/auth/login ^
+-H "Content-Type: application/json" ^
+-d "{\"email\":\"jon@gmail.com\",\"password\":\"Jon@123\"}"
+
+for adding the employee with admin role cmd:
+curl -X POST http://localhost:5000/api/admin/add ^
+-H "Content-Type: application/json" ^
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6Miwicm9sZSI6IkFkbWluIiwiaWF0IjoxNzY4NTQxNzEyLCJleHAiOjE3Njg2MjgxMTJ9.6pCsh1vrbXtTJs4Q4W41mE2e82R5PWjTKFNxzDfQKiw" ^
+-d "{\"full_name\":\"NehaJoshi\",\"email\":\"neha@gmail.com\",\"password\":\"Neha@123\",\"designation\":\"Tester\",\"salary\":35000,\"role_id\":3,\"department_id\":2,\"manager_id\":4}"
+
+
+for submit the timesheet cmd:
+
+curl -X POST http://localhost:5000/api/timesheets/submit ^
+-H "Content-Type: application/json" ^
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6MSwicm9sZSI6IkVtcGxveWVlIiwiaWF0IjoxNzY4Mjg2Nzc1LCJleHAiOjE3NjgzNzMxNzV9.vr1doF6ryj8SlYQ1eFrquMPXkou_LvTZgR3pVAcwGOE" ^
+-d "{\"week_start_date\":\"2026-01-06\",\"entries\":[{\"work_date\":\"2026-01-06\",\"hours_worked\":8,\"task_description\":\"Worked on backend APIs\"},{\"work_date\":\"2026-01-07\",\"hours_worked\":7,\"task_description\":\"Bug fixes and testing\"},{\"work_date\":\"2026-01-08\",\"hours_worked\":8,\"task_description\":\"JWT and role middleware\"}]}"
+for getting pending timesheet to manager cmd:
+curl -X GET http://localhost:5000/api/timesheets/manager/pending ^
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6NCwicm9sZSI6Ik1hbmFnZXIiLCJpYXQiOjE3NjgzMDU5MjUsImV4cCI6MTc2ODM5MjMyNX0.XBrvMHte-6mRG7_1lfK08XoUlXkIoICC_IZTBrQy5B4"
+
+for getting employees timesheet details cmd:
+curl -X GET http://localhost:5000/api/employee/Profile ^
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6MTAsInJvbGUiOiJFbXBsb3llZSIsImlhdCI6MTc2ODYyNjIwNSwiZXhwIjoxNzY4NzEyNjA1fQ.Z2CNryi-E_UXY7k6hVQjUjFqmgN1aWePKCJZ445t9cg"
