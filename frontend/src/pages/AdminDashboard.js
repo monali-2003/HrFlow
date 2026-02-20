@@ -23,26 +23,28 @@ const AdminDashboard = () => {
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Role</th>
-            <th>Department</th>
             <th>Designation</th>
             <th>Salary</th>
+            <th>Role</th>
+            <th>Department</th>
+<th> Manager </th>
             <th>Status</th>
           </tr>
         </thead>
 
         <tbody>
-          {employees.map(emp => (
-            <tr key={emp.employee_id}>
-              <td>{emp.full_name}</td>
-              <td>{emp.email}</td>
-              <td>{emp.designation}</td>
-              <td>{emp.salary}</td>
+          {employees.map(e => (
+            <tr key={e.employee_id}>
+              <td>{e.full_name}</td>
+              <td>{e.email}</td>
+              <td>{e.designation}</td>
+              <td>{e.salary}</td>
               
-<td>{emp.role_id}</td>
-              <td>{emp.department_id}</td>
-
-              <td>{emp.status}</td>
+<td>{e.role_id}</td>
+              <td>{e.department_id}</td>
+              <td>{e.manager_id}</td>
+              
+              <td>{e.status}</td>
             </tr>
           ))}
         </tbody>
