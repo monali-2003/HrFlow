@@ -39,6 +39,12 @@ function App() {
             <ManagerDashboard />
           </ProtectedRoute>
         } />
+        <Route path="/manager/profile" element={
+          <ProtectedRoute role="Manager">
+            <EmployeeProfile  />
+          </ProtectedRoute>
+        } />
+
         {/* Admin routes */}
         <Route
           path="/admin"
