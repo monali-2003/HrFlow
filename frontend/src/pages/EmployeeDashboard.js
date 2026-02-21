@@ -30,6 +30,8 @@ const EmployeeDashboard = () => {
 
   return (
     <div>
+<h1> EmployeeDashboard </h1>
+<Link to="/employee/profile"> View/EditProfile </Link>
       <h2>My Timesheets</h2>
 
       <Link to="/employee/timesheet">

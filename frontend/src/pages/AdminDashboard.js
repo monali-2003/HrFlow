@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/api";
-import AddEmployee from "./AddEmployee";
+import { Link } from "react-router-dom";
+
 const AdminDashboard = () => {
   const [employees, setEmployees] = useState([]);
 
@@ -9,7 +10,7 @@ const AdminDashboard = () => {
   }, []);
 
   const loadEmployees = () => {
-    api.get("/admin/employees").then(res => {
+    api.get("/admin/").then(res => {
       setEmployees(res.data.employees);
     });
   };
@@ -17,7 +18,7 @@ const AdminDashboard = () => {
   return (
     <div>
       <h2>Admin – Employee Management</h2>
-      <AddEmployee />
+      <Link to="/admin/addEmployee"> AddEmployee </Link>
       <table border="1" cellPadding="6">
         <thead>
           <tr>

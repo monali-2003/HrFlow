@@ -34,6 +34,7 @@ CREATE TABLE employee_personal_details (
     date_of_birth DATE,
 	    gender varchar(44),
     blood_group varchar(33),
+    updated_at DATETIME DEFAULT GETDATE(),
     CONSTRAINT fk_emp_personal FOREIGN KEY (employee_id)
     REFERENCES employees(employee_id)
 );

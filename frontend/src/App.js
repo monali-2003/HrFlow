@@ -1,9 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
+import EmployeeProfile from "./pages/EmployeeProfile";
+
 import TimesheetForm from "./pages/TimesheetForm";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import AddEmployee from "./pages/AddEmployee";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -16,6 +20,12 @@ function App() {
             <EmployeeDashboard />
           </ProtectedRoute>
         } />
+        <Route path="/employee/profile" element={
+          <ProtectedRoute role="Employee">
+            <EmployeeProfile />
+          </ProtectedRoute>
+        } />
+
 <Route
   path="/employee/timesheet"
   element={
@@ -38,6 +48,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/addEmployee"
+          element={
+            <ProtectedRoute role="Admin">
+              <AddEmployee />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );
