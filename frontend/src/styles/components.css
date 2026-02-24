@@ -10,7 +10,7 @@ button {
 button:disabled {
   opacity: 0.5;
 }
-
+*/
 textarea {
   width: 100%;
   min-height: 8rem;
@@ -18,7 +18,7 @@ textarea {
   font-size: var(--font-large);
   border-radius: 6px;
 }
-
+/*
 /* Typing text block */
 .typing-content {
   background: #020617;

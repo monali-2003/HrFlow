@@ -76,6 +76,28 @@ CREATE TABLE approval_history (
     CONSTRAINT fk_approval_manager FOREIGN KEY (manager_id)
     REFERENCES employees(employee_id)
 );
+CREATE TABLE employee_history (
+    history_id INT IDENTITY(1,1) PRIMARY KEY,
+
+    employee_id INT,
+    full_name VARCHAR(100),
+    email VARCHAR(100),
+    designation VARCHAR(100),
+    salary DECIMAL(10,2),
+    role_id INT,
+    department_id INT,
+    manager_id INT,
+    status BIT,
+
+    phone VARCHAR(20),
+    address VARCHAR(255),
+    gender VARCHAR(20),
+    date_of_birth DATE,
+    emergency_contact VARCHAR(50),
+
+    removed_by INT,
+    removed_at DATETIME DEFAULT GETDATE()
+);
 INSERT INTO roles (role_name)
 VALUES ('Admin'), ('Manager'), ('Employee');
 

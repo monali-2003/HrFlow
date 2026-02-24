@@ -7,6 +7,7 @@ import TimesheetForm from "./pages/TimesheetForm";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AddEmployee from "./pages/AddEmployee";
+import AdminProfile from "./pages/AdminProfile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -62,7 +63,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+<Route
+  path="/admin/employee/:id"
+  element={
+    <ProtectedRoute role="Admin">
+      <AdminProfile />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/api";
+import AdminDeleteEmployee from "./adminDeleteEmployee";
 import { Link } from "react-router-dom";
-
+import LogoutButton from "../components/LogoutButton";
 const AdminDashboard = () => {
   const [employees, setEmployees] = useState([]);
 
@@ -17,8 +18,10 @@ const AdminDashboard = () => {
 
   return (
     <div>
+<LogoutButton/>
       <h2>Admin – Employee Management</h2>
       <Link to="/admin/addEmployee"> AddEmployee </Link>
+      <AdminDeleteEmployee onDeleteSuccess={loadEmployees} />
       <table border="1" cellPadding="6">
         <thead>
           <tr>
@@ -30,6 +33,7 @@ const AdminDashboard = () => {
             <th>Department</th>
 <th> Manager </th>
             <th>Status</th>
+<th> Action </th>
           </tr>
         </thead>
 
@@ -41,11 +45,16 @@ const AdminDashboard = () => {
               <td>{e.designation}</td>
               <td>{e.salary}</td>
               
-<td>{e.role_id}</td>
-              <td>{e.department_id}</td>
+<td>{e.role_name}</td>
+              <td>{e.department_name}</td>
               <td>{e.manager_id}</td>
               
               <td>{e.status}</td>
+      <td>
+        <Link to={`/admin/employee/${e.employee_id}`}>
+          <button>View / Edit</button>
+        </Link>
+      </td>
             </tr>
           ))}
         </tbody>

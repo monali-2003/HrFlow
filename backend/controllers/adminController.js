@@ -12,12 +12,18 @@ const getEmployees = async (req, res) => {
         e.email,
         e.designation,
         e.salary,
-        e.role_id,
-        e.department_id,
+        r.role_name,
+        d.department_name,
         e.manager_id,
         e.status
       FROM employees e
-      where e.role_id!=1
+      join 
+      roles     r
+      on e.role_id=r.role_id
+      join 
+      departments d
+      on e.department_id=d.department_id
+      where r.role_id!=1
       ORDER BY e.full_name
     `);
 
