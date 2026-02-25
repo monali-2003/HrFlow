@@ -44,5 +44,5 @@ jobs:
         with:
           app-name: 'HrFlow'
           slot-name: 'Production'
-          package: backend
+          package: ./backend
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B73808061A4A4CB582875D3341AE293C }}
