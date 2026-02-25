@@ -1,6 +1,5 @@
 name: Deploy HrFlow to Azure
 
-
 on:
   push:
     branches:
@@ -14,20 +13,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Setup Node
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 24
+          node-version: '18.x'
 
-      - name: Install dependencies
+      # Install frontend dependencies
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      # Build frontend
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      # Copy build to backend/public
+      - name: Copy build to backend
+        run: |
+          rm -rf backend/public
+          mkdir -p backend/public
+          cp -r frontend/build/* backend/public/
+
+      # Install backend dependencies
+      - name: Install backend dependencies
         working-directory: backend
         run: npm install
 
-      - name: Build React app
-        working-directory: backend
-        run: npm run build
-
-      - name: Deploy to Azure
+      # Deploy backend (with built frontend inside public)
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: HrFlow
