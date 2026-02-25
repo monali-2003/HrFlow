@@ -18,19 +18,16 @@ const AddEmployee = () => {
   const [managers, setManagers] = useState([]);
   const [message, setMessage] = useState("");
 
-  /* ---------------- Load dropdown data ---------------- */
   useEffect(() => {
     api.get("/common/roles").then(res => setRoles(res.data.roles));
     api.get("/common/departments").then(res => setDepartments(res.data.departments));
     api.get("/common/managers").then(res => setManagers(res.data.managers));
   }, []);
 
-  /* ---------------- Handle input ---------------- */
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  /* ---------------- Submit form ---------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -59,133 +56,196 @@ const AddEmployee = () => {
     }
   };
 
+  /* ===================== STYLES ===================== */
+
+  const pageStyle = {
+    minHeight: "100vh",
+    backgroundColor: "#f4f6f9",
+    padding: "30px",
+    fontFamily: "Arial, sans-serif"
+  };
+
+  const cardStyle = {
+    backgroundColor: "white",
+    padding: "25px",
+    borderRadius: "10px",
+    boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
+  };
+
+  const rowStyle = {
+    display: "flex",
+    gap: "20px",
+    marginBottom: "20px"
+  };
+
+  const fieldStyle = {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column"
+  };
+
+  const labelStyle = {
+    marginBottom: "6px",
+    fontWeight: "bold",
+    color: "#2c3e50"
+  };
+
+  const inputStyle = {
+    padding: "8px",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+    fontSize: "14px"
+  };
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    backgroundColor: "#28a745",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "bold"
+  };
+
   return (
-    <div>
-      <h2>Add Employee</h2>
+    <div style={pageStyle}>
+      <h2 style={{ marginBottom: "25px", color: "#2c3e50" }}>
+        Add New Employee
+      </h2>
 
-      {message && <p aria-live="polite">{message}</p>}
+      {message && (
+        <div style={{ marginBottom: "15px", color: "#28a745" }}>
+          {message}
+        </div>
+      )}
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Full Name
-          <input
-            name="full_name"
-            value={form.full_name}
-            onChange={handleChange}
-            required
-          />
-        </label>
+      <form onSubmit={handleSubmit} style={cardStyle}>
 
-        <br />
+        {/* Row 1 */}
+        <div style={rowStyle}>
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Employee Name</label>
+            <input
+              name="full_name"
+              value={form.full_name}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            />
+          </div>
 
-        <label>
-          Email
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Email Id</label>
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            />
+          </div>
 
-        <br />
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Password</label>
+            <input
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            />
+          </div>
+        </div>
 
-        <label>
-          Password
-          <input
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-        </label>
+        {/* Row 2 */}
+        <div style={rowStyle}>
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Role</label>
+            <select
+              name="role_id"
+              value={form.role_id}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            >
+              <option value="">Select Role</option>
+              {roles.map(r => (
+                <option key={r.role_id} value={r.role_id}>
+                  {r.role_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <br />
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Department</label>
+            <select
+              name="department_id"
+              value={form.department_id}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            >
+              <option value="">Select Department</option>
+              {departments.map(d => (
+                <option key={d.department_id} value={d.department_id}>
+                  {d.department_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <label>
-          Role
-          <select
-            name="role_id"
-            value={form.role_id}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Role</option>
-            {roles.map(r => (
-              <option key={r.role_id} value={r.role_id}>
-                {r.role_name}
-              </option>
-            ))}
-          </select>
-        </label>
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Manager</label>
+            <select
+              name="manager_id"
+              value={form.manager_id}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            >
+              <option value="">Select Manager</option>
+              {managers.map(m => (
+                <option key={m.employee_id} value={m.employee_id}>
+                  {m.full_name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
 
-        <br />
+        {/* Row 3 */}
+        <div style={rowStyle}>
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Designation</label>
+            <input
+              name="designation"
+              value={form.designation}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            />
+          </div>
 
-        <label>
-          Department
-          <select
-            name="department_id"
-            value={form.department_id}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Department</option>
-            {departments.map(d => (
-              <option key={d.department_id} value={d.department_id}>
-                {d.department_name}
-              </option>
-            ))}
-          </select>
-        </label>
+          <div style={fieldStyle}>
+            <label style={labelStyle}>Salary</label>
+            <input
+              name="salary"
+              type="number"
+              value={form.salary}
+              onChange={handleChange}
+              style={inputStyle}
+              required
+            />
+          </div>
+        </div>
 
-        <br />
+        <button type="submit" style={buttonStyle}>
+          Add Employee
+        </button>
 
-        <label>
-          Manager (optional)
-          <select
-            name="manager_id"
-            value={form.manager_id}
-            onChange={handleChange}
-          >
-            <option value="">None</option>
-            {managers.map(m => (
-              <option key={m.employee_id} value={m.employee_id}>
-                {m.full_name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <br />
-
-        <label>
-          Designation
-          <input
-            name="designation"
-            value={form.designation}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <br />
-
-        <label>
-          Salary
-          <input
-            name="salary"
-            type="number"
-            value={form.salary}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <br /><br />
-
-        <button type="submit">Add Employee</button>
       </form>
     </div>
   );

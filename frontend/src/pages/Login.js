@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/hrflow-logo.jpeg"; // ✅ Import Logo
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,19 +44,32 @@ const Login = () => {
         style={{
           backgroundColor: "white",
           padding: "40px",
-          width: "350px",
+          width: "360px",
           borderRadius: "12px",
           boxShadow: "0 15px 35px rgba(0,0,0,0.2)",
           textAlign: "center",
         }}
       >
+        {/* ✅ Logo */}
+        <div style={{ marginBottom: "20px" }}>
+          <img
+            src={logo}
+            alt="HRFlow Logo"
+            style={{
+              width: "120px",
+              height: "auto",
+              objectFit: "contain"
+            }}
+          />
+        </div>
+
         <h2
           style={{
             marginBottom: "25px",
             color: "#333",
           }}
         >
-          HR Flow Login
+          Login to HRFlow
         </h2>
 
         {/* Email Input */}

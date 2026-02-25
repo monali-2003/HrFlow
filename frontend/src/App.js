@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./MainLayout";
 import Login from "./pages/Login";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import EmployeeProfile from "./pages/EmployeeProfile";
@@ -7,6 +8,8 @@ import TimesheetForm from "./pages/TimesheetForm";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AddEmployee from "./pages/AddEmployee";
+import adminDeleteEmployee from "./pages/adminDeleteEmployee";
+
 import AdminProfile from "./pages/AdminProfile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -15,6 +18,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+<Route
+  path="/employee"
+  element={
+    <MainLayout>
+      <EmployeeDashboard />
+    </MainLayout>
+  }
+/>
+
         <Route path="/" element={<Login />} />
         <Route path="/employee" element={
           <ProtectedRoute role="Employee">
@@ -63,6 +75,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/removeEmployee"
+          element={
+            <ProtectedRoute role="Admin">
+              <adminDeleteEmployee />
+            </ProtectedRoute>
+          }
+        />
+
 <Route
   path="/admin/employee/:id"
   element={

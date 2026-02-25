@@ -66,8 +66,6 @@ const getDateForDay = (weekStart, index) => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-/* ---------- Component ---------- */
-
 const TimesheetForm = () => {
   const weeks = getWeeksForRange();
   const [selectedWeek, setSelectedWeek] = useState("");
@@ -121,79 +119,154 @@ const TimesheetForm = () => {
     alert("Timesheet submitted successfully");
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Weekly Timesheet</h2>
+  /* ================= STYLES ================= */
 
-      <fieldset>
-        <legend>Select Week</legend>
+  const pageStyle = {
+    minHeight: "100vh",
+    backgroundColor: "#f4f6f9",
+    padding: "30px",
+    fontFamily: "Arial, sans-serif"
+  };
+
+  const cardStyle = {
+    backgroundColor: "#ffffff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    marginBottom: "25px"
+  };
+
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "collapse"
+  };
+
+  const thStyle = {
+    backgroundColor: "#4e73df",
+    color: "#ffffff",
+    padding: "12px",
+    textAlign: "left",
+    fontWeight: "bold"
+  };
+
+  const tdStyle = {
+    padding: "10px",
+    borderBottom: "1px solid #e0e0e0",
+    color: "#2c3e50",
+    fontSize: "14px"
+  };
+
+  const radioStyle = {
+    appearance: "auto",
+    width: "18px",
+    height: "18px",
+    marginRight: "8px"
+  };
+
+  const buttonStyle = {
+    padding: "8px 20px",
+    backgroundColor: "#28a745",
+    color: "#ffffff",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "bold"
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={pageStyle}>
+      <h2 style={{ color: "#2c3e50", marginBottom: "20px" }}>
+        Weekly Timesheet
+      </h2>
+
+      {/* WEEK SELECTION */}
+      <div style={cardStyle}>
+        <h3 style={{ color: "#4e73df", marginBottom: "15px" }}>
+          Select Week
+        </h3>
+
         {weeks.map(w => (
-          <label key={w.start} style={{ display: "block" }}>
+          <label key={w.start} style={{ display: "block", marginBottom: "8px", color: "#2c3e50" }}>
             <input
               type="radio"
               name="week"
               value={w.start}
               onChange={() => setSelectedWeek(w.start)}
+              style={radioStyle}
             />
             {w.label}
           </label>
         ))}
-      </fieldset>
+      </div>
 
-      <br />
-
-      <table border="1" cellPadding="6">
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Work Hours</th>
-            <th>Day Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <tr key={row.day}>
-              <td>{row.day}</td>
-              <td>
-                <input
-                  type="number"
-                  min="0"
-                  max="12"
-                  value={row.hours}
-                  onChange={e => handleChange(index, "hours", e.target.value)}
-                />
-              </td>
-              <td>
-                <select
-                  value={row.type}
-                  onChange={e => handleChange(index, "type", e.target.value)}
-                >
-                  {row.isWeekend ? (
-                    <option>Weekend</option>
-                  ) : (
-                    <>
-                      <option>Working Day</option>
-                      <option>Public Holiday</option>
-                      <option>Leave</option>
-                      <option>Sick Leave</option>
-                    </>
-                  )}
-                </select>
-              </td>
+      {/* TABLE */}
+      <div style={cardStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th style={thStyle}>Day</th>
+              <th style={thStyle}>Work Hours</th>
+              <th style={thStyle}>Day Type</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr
+                key={row.day}
+                style={{
+                  backgroundColor: row.isWeekend
+                    ? "#f8f9fa"
+                    : index % 2 === 0
+                    ? "#ffffff"
+                    : "#f2f2f2"
+                }}
+              >
+                <td style={tdStyle}>{row.day}</td>
+                <td style={tdStyle}>
+                  <input
+                    type="number"
+                    min="0"
+                    max="12"
+                    value={row.hours}
+                    onChange={e => handleChange(index, "hours", e.target.value)}
+                  />
+                </td>
+                <td style={tdStyle}>
+                  <select
+                    value={row.type}
+                    onChange={e => handleChange(index, "type", e.target.value)}
+                  >
+                    {row.isWeekend ? (
+                      <option>Weekend</option>
+                    ) : (
+                      <>
+                        <option>Working Day</option>
+                        <option>Public Holiday</option>
+                        <option>Leave</option>
+                        <option>Sick Leave</option>
+                      </>
+                    )}
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      <br />
+        <div style={{ marginTop: "15px", fontWeight: "bold", color: "#2c3e50" }}>
+          Total Working Hours:
+          <input
+            type="number"
+            value={totalHours}
+            readOnly
+            style={{ marginLeft: "10px", width: "70px" }}
+          />
+        </div>
+      </div>
 
-      <label>
-        Total Working Hours:
-        <input type="number" value={totalHours} readOnly />
-      </label>
-
-      <br /><br />
-      <button type="submit">Submit Timesheet</button>
+      <button type="submit" style={buttonStyle}>
+        Submit Timesheet
+      </button>
     </form>
   );
 };

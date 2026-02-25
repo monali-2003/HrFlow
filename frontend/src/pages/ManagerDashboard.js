@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/api";
 import { Link } from "react-router-dom";
+import LogoutButton from "../components/LogoutButton";
 
 const ManagerDashboard = () => {
   const [pending, setPending] = useState([]);
@@ -36,80 +37,193 @@ const ManagerDashboard = () => {
       });
 
       alert(`Timesheet ${action.toLowerCase()} successfully`);
-      loadPending(); // refresh table
+      loadPending();
 
     } catch (err) {
       alert(err.response?.data?.message || "Action failed");
     }
   };
 
+  /* ================= STYLES ================= */
+
+  const pageStyle = {
+    minHeight: "100vh",
+    backgroundColor: "#f4f6f9",
+    padding: "30px",
+    fontFamily: "Arial, sans-serif"
+  };
+
+  const headerStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "25px"
+  };
+
+  /* ✅ Group Buttons */
+  const rightButtonGroup = {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px"
+  };
+
+  const cardStyle = {
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
+  };
+
+  const profileBtnStyle = {
+    padding: "8px 14px",
+    backgroundColor: "#4e73df",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "bold"
+  };
+
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "collapse"
+  };
+
+  const thStyle = {
+    padding: "12px",
+    backgroundColor: "#4e73df",
+    color: "white",
+    textAlign: "left"
+  };
+
+  const tdStyle = {
+    padding: "10px",
+    borderBottom: "1px solid #e0e0e0",
+    color: "#2c3e50"
+  };
+
+  const inputStyle = {
+    padding: "6px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    width: "100%"
+  };
+
+  const approveBtn = {
+    padding: "6px 12px",
+    backgroundColor: "#28a745",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "13px"
+  };
+
+  const rejectBtn = {
+    padding: "6px 12px",
+    backgroundColor: "#dc3545",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "13px",
+    marginLeft: "6px"
+  };
+
   return (
-    <div>
-<h1> Manager Dashboard </h1>
-<Link to="/manager/profile"> View/EditProfile </Link>
-      <h2>Pending Timesheets (Manager)</h2>
+    <div style={pageStyle}>
 
-      {pending.length === 0 ? (
-        <p>No pending timesheets</p>
-      ) : (
-        <table border="1" cellPadding="6">
-          <thead>
-            <tr>
-              <th>Employee Name</th>
-              <th>Week Start</th>
-              <th>Total Hours</th>
-              <th>Status</th>
-              <th>Manager Comment</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+      {/* Header */}
+      <div style={headerStyle}>
+        <h1 style={{ color: "#2c3e50", margin: 0 }}>
+          Manager Dashboard
+        </h1>
 
-          <tbody>
-            {pending.map(ts => (
-              <tr key={ts.timesheet_id}>
-                <td>{ts.employee_name}</td>
-                <td>{ts.week_start_date}</td>
-                <td>{ts.total_hours}</td>
-                <td>{ts.status}</td>
+        {/* ✅ Buttons grouped properly */}
+        <div style={rightButtonGroup}>
+          <Link to="/manager/profile">
+            <button style={profileBtnStyle}>
+              View / Edit Profile
+            </button>
+          </Link>
 
-                <td>
-                  <label>
-                    <span className="sr-only">
-                      Comment for {ts.employee_name}
-                    </span>
+          <LogoutButton />
+        </div>
+      </div>
+
+      <h2 style={{ color: "#4e73df", marginBottom: "20px" }}>
+        Pending Timesheets
+      </h2>
+
+      <div style={cardStyle}>
+        {pending.length === 0 ? (
+          <p style={{ color: "#6c757d" }}>
+            No pending timesheets
+          </p>
+        ) : (
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                <th style={thStyle}>Employee Name</th>
+                <th style={thStyle}>Week Start</th>
+                <th style={thStyle}>Total Hours</th>
+                <th style={thStyle}>Status</th>
+                <th style={thStyle}>Manager Comment</th>
+                <th style={thStyle}>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {pending.map((ts, index) => (
+                <tr
+                  key={ts.timesheet_id}
+                  style={{
+                    backgroundColor:
+                      index % 2 === 0 ? "#f9f9f9" : "white"
+                  }}
+                >
+                  <td style={tdStyle}>{ts.employee_name}</td>
+                  <td style={tdStyle}>{ts.week_start_date}</td>
+                  <td style={tdStyle}>{ts.total_hours}</td>
+                  <td style={tdStyle}>{ts.status}</td>
+
+                  <td style={tdStyle}>
                     <input
                       type="text"
+                      placeholder="Enter comment"
                       value={comments[ts.timesheet_id] || ""}
                       onChange={e =>
                         handleCommentChange(ts.timesheet_id, e.target.value)
                       }
+                      style={inputStyle}
                     />
-                  </label>
-                </td>
+                  </td>
 
-                <td>
-                  <button
-                    onClick={() =>
-                      handleAction(ts.timesheet_id, "Approved")
-                    }
-                  >
-                    Approve
-                  </button>
+                  <td style={tdStyle}>
+                    <button
+                      onClick={() =>
+                        handleAction(ts.timesheet_id, "Approved")
+                      }
+                      style={approveBtn}
+                    >
+                      Approve
+                    </button>
 
-                  <button
-                    onClick={() =>
-                      handleAction(ts.timesheet_id, "Rejected")
-                    }
-                    style={{ marginLeft: "6px" }}
-                  >
-                    Reject
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                    <button
+                      onClick={() =>
+                        handleAction(ts.timesheet_id, "Rejected")
+                      }
+                      style={rejectBtn}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
