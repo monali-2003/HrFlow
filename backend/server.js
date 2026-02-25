@@ -31,10 +31,10 @@ app.use("/api/admin/manage", adminDeleteRoutes);
 app.use(express.static(path.join(__dirname, "public")));
 
 // React routing support
-app.get("*", (req, res) => {
+
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
