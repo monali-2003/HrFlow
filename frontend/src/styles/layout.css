@@ -1,3 +1,18 @@
+#root {
+  padding: var(--space-xl) var(--space-md);
+}
+
+#root > div,
+#root > form {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: var(--space-xl);
+}
+
 main {
   max-width: 70ch;
   margin: auto;
@@ -5,19 +20,52 @@ main {
 }
 
 section {
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin: 0 0 var(--space-lg);
+  background: var(--surface-soft);
+}
+
+legend {
+  color: var(--heading);
+  font-weight: 700;
+  padding: 0 var(--space-xs);
 }
 
 h1 {
-  font-size: 1.6rem;
-  margin-bottom: var(--space-md);
+  font-size: 1.7rem;
+  color: var(--heading);
+  margin-bottom: var(--space-sm);
 }
 
 h2 {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
+  color: var(--heading);
   margin-bottom: var(--space-md);
+}
+
+h3 {
+  font-size: 1.1rem;
+  color: var(--heading);
+  margin-bottom: var(--space-sm);
 }
 
 p {
   margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 900px) {
+  #root {
+    padding: var(--space-md);
+  }
+
+  #root > div,
+  #root > form {
+    padding: var(--space-lg);
+  }
 }
