@@ -8,7 +8,7 @@ import TimesheetForm from "./pages/TimesheetForm";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AddEmployee from "./pages/AddEmployee";
-import adminDeleteEmployee from "./pages/adminDeleteEmployee";
+//import adminDeleteEmployee from "./pages/adminDeleteEmployee";
 
 import AdminProfile from "./pages/AdminProfile";
 
@@ -72,14 +72,6 @@ function App() {
           element={
             <ProtectedRoute role="Admin">
               <AddEmployee />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/removeEmployee"
-          element={
-            <ProtectedRoute role="Admin">
-              <adminDeleteEmployee />
             </ProtectedRoute>
           }
         />
